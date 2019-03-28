@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.admin.mapper.AdminMenuMapper">
+
+    <resultMap id="admin_menu_map" type="com.app.admin.entity.AdminMenu">
+        <id column="menu_id" property="menuId" />
+        <result column="menu_name" property="menuName" />
+        <result column="menu_order" property="menuOrder" />
+        <result column="menu_pid" property="menuPid" />
+        <result column="menu_url" property="menuUrl" />
+    </resultMap>
+
+    <select id="findAll"  resultMap="admin_menu_map">
+        select * from app_admin_menu order by menu_order , menu_pid
+    </select>
+
+</mapper>

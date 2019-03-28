@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.core.mapper.PermissionMapper">
+
+    <resultMap id="permission_map" type="com.app.core.entity.Permission">
+        <id column="pms_id" property="id" />
+        <result column="pms_name" property="name" />
+        <result column="pms_permission" property="permission" />
+        <result column="pms_parent_id" property="parentId" />
+        <result column="pms_display_order" property="order" />
+        <result column="pms_level" property="level" />
+        <result column="pms_desc" property="desc" />
+    </resultMap>
+
+    <sql id="permission_not_null_where">
+        <if test="id != null and id!='' ">
+            and p.pms_id = #{id}
+        </if>
+        <if test="name != null and name!='' ">
+            and p.pms_name = #{name}
+        </if>
+        <if test="permission != null and permission!='' ">
+            and p.pms_permission = #{permission}
+        </if>
+        <if test="parentId != null and parentId!='' ">
+            and p.pms_parent_id = #{parentId}
+        </if>
+        <if test="order != null ">
+            and p.pms_display_order = #{order}
+        </if>
+        <if test="level != null and level!='' ">
+            and p.pms_level = #{level}
+        </if>
+        <if test="desc != null and desc!='' ">
+            and p.pms_desc = #{desc}
+        </if>
+    </sql>
+
+    <sql id="permission_not_null_update_param">
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name!='' ">
+                 p.pms_name = #{name} ,
+            </if>
+            <if test="permission != null and permission!='' ">
+                 p.pms_permission = #{permission},
+            </if>
+            <if test="parentId != null and parentId!='' ">
+                 p.pms_parent_id = #{parentId},
+            </if>
+            <if test="order != null ">
+                 p.pms_display_order = #{order},
+            </if>
+            <if test="level != null and level!='' ">
+                 p.pms_level = #{level},
+            </if>
+            <if test="desc != null and desc!='' ">
+                 p.pms_desc = #{desc},
+            </if>
+        </trim>
+    </sql>
+
+    <select id="findByRoleIds" parameterType="java.util.Map"  resultMap="permission_map">
+        SELECT
+            p.*
+        FROM
+            app_role_permission rp
+        LEFT JOIN app_permission p ON rp.permission_id = p.pms_id
+        WHERE
+            rp.role_id IN
+        <foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findByRoleId" parameterType="java.lang.String"  resultMap="permission_map">
+        SELECT
+        p.*
+        FROM
+        app_role_permission rp
+        LEFT JOIN app_permission p ON rp.permission_id = p.pms_id
+        WHERE
+        rp.role_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="permission_map">
+        SELECT * FROM app_permission p ORDER BY p.pms_level , p.pms_display_order
+    </select>
+
+    <select id="findPermission" resultMap="permission_map" parameterType="com.app.core.entity.Permission">
+        SELECT * FROM app_permission p
+        WHERE  1=1
+        <include refid="permission_not_null_where"/>
+    </select>
+    
+    <update id="updateById" parameterType="com.app.core.entity.Permission">
+        UPDATE  app_permission p
+            <include refid="permission_not_null_update_param"/>
+        WHERE
+            p.pms_id = #{id}
+    </update>
+
+    <delete id="delById" parameterType="java.lang.String">
+        DELETE FROM app_permission WHERE pms_id = #{id}
+    </delete>
+
+</mapper>

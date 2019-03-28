@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<body th:fragment="permissionEdit">
+    <script id="admin_permission_edit_tmp" type="text/html">
+        <div class="panel-body">
+
+            <form class="form-horizontal" onsubmit="return false" id="edit_permission_form">
+                <input type="hidden" name="id" id="edit_permission_id" value="{{permission.id}}">
+                <input type="hidden" name="level" id="edit_level" value="{{permission.dataMap.level}}">
+                <div class="form-group error hidden" id="edit_error">
+                    <label class="col-sm-offset-2 col-sm-9" id="edit_error_label"></label>
+                </div>
+                <div class="form-group">
+                    <label for="edit_name" class="col-sm-2 control-label">权限名称</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="name" id="edit_name" placeholder="权限名称"  value="{{permission.name}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_permission" class="col-sm-2 control-label">权限</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="permission" id="edit_permission" placeholder="权限" value="{{permission.dataMap.permission}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_order" class="col-sm-2 control-label">显示顺序</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="edit_order" name="order" placeholder="显示顺序" value="{{permission.dataMap.order}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_parent" class="col-sm-2 control-label">上级权限</label>
+                    <div class="col-sm-9">
+                        <select  class="form-control"  id="edit_parent" name="parentId"> </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_desc" class="col-sm-2 control-label">描述</label>
+                    <div class="col-sm-9">
+                            <textarea class="form-control" id="edit_desc" placeholder="描述" name="desc">{{permission.dataMap.desc}}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-5 col-sm-7">
+                        <button class="btn btn-primary" onclick="updatePermission();">提交</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </script>
+    <script th:src="@{/js/admin/permission/edit.js}"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<body th:fragment="role_edit_form">
+    <script id="admin_role_edit_tmp" type="text/html">
+        <div class="panel-body">
+
+            <form class="form-horizontal" onsubmit="return false" id="edit_role_form">
+                <div class="form-group">
+                    <label for="edit_name" class="col-sm-2 control-label">角色名称</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="name" id="edit_name" placeholder="角色名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_state" class="col-sm-2 control-label">状态</label>
+                    <div class="col-sm-9">
+                        <select  class="form-control"  id="edit_state" name="state">
+                            <option value="1">启用</option>
+                            <option value="0">禁止</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_description" class="col-sm-2 control-label">描述</label>
+                    <div class="col-sm-9">
+                            <textarea class="form-control" id="edit_description" placeholder="描述" name="description"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role_edit_permissionTree" class="col-sm-2 control-label">权限</label>
+                    <div class="col-sm-9">
+                        <div id="role_edit_permissionTree" class="ztree tree-form-control"></div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-5 col-sm-7">
+                        <button class="btn btn-primary" type="submit">提交</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </script>
+    <script th:src="@{/js/admin/role/edit.js}"></script>
+</body>
+</html>

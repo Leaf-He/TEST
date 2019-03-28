@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="admin/layout/iframe_main" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<body>
+    <div type="text/css" layout:fragment="customer_css">
+        <style type="text/css">
+           table.dataTable{border-right:1px solid ;border-bottom:1px solid }
+           table.dataTable td,th{border-left:1px solid ;border-top:1px solid; text-align:center }
+        </style>
+    </div>
+    <div layout:fragment="main_content" class="wrapper wrapper-content ">
+        <div class="row">
+            <div class="col-sm-12">
+                <div>
+                    <form class="form-inline tool-bar">
+                        <button class="btn  btn-success" type="button" id="role_add_btn"
+                                shiro:hasAnyPermissions="permission:all,permission:add" >
+                            <i aria-hidden="true" class="fa fa-plus"></i>&nbsp;添加
+                        </button>
+                        <button class="btn  btn-danger"  type="button" id="role_del_btn"
+                                shiro:hasAnyPermissions="permission:all,permission:delete">
+                            <i aria-hidden="true" class="fa fa-trash"></i>&nbsp;删除
+                        </button>
+
+                        <div class="pull-right">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="exampleInputPassword3" placeholder="请输入角色名称">
+                            </div>
+
+                            <button class="btn btn-primary ">搜索</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <table id="role_table" class="display hover stripe"></table>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div th:replace="admin/system/role/add :: role_add_form" ></div>
+
+        </div>
+
+    </div>
+    <div layout:fragment="customer_js">
+        <script th:src="@{/js/admin/common/permissionTree.js}"></script>
+        <script th:src="@{/js/admin/role/list.js}"></script>
+    </div>
+</body>
+</html>

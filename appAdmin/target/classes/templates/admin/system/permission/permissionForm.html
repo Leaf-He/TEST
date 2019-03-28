@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<body th:fragment="permission_form">
+    <style type="text/css">
+        .permission-form .tool-bar{
+            padding-top: 10px;
+            padding-bottom: 5px;
+        }
+        .permission-form .form-content{
+            background-color: #FFFFFF;
+        }
+    </style>
+    <div class="permission-form">
+        <form class="form-inline tool-bar">
+            <button class="btn  btn-success" type="button" id="permission_add_btn"
+                    shiro:hasAnyPermissions="permission:all,permission:add" >
+                <i aria-hidden="true" class="fa fa-plus"></i>&nbsp;添加
+            </button>
+            <button class="btn  btn-success"  type="button" id="permission_edit_btn"
+                    shiro:hasAnyPermissions="permission:all,permission:edit">
+                <i aria-hidden="true" class="fa fa-edit"></i>&nbsp;编辑
+            </button>
+            <button class="btn  btn-danger"  type="button" id="permission_del_btn"
+                    shiro:hasAnyPermissions="permission:all,permission:delete">
+                <i aria-hidden="true" class="fa fa-trash"></i>&nbsp;删除
+            </button>
+            <!--
+            <div class="pull-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="exampleInputPassword3" placeholder="Password">
+                </div>
+
+                <button class="btn btn-primary ">搜索</button>
+            </div>
+            -->
+        </form>
+        <div class="form-content panel panel-default">
+            <div class="panel-heading">
+                权限信息
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="detail_name" class="col-sm-2 control-label">权限名称</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="detail_name" placeholder="权限名称" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="detail_permission" class="col-sm-2 control-label">权限</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="detail_permission" placeholder="权限" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="detail_order" class="col-sm-2 control-label">显示顺序</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="detail_order" placeholder="显示顺序" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="detail_parent" class="col-sm-2 control-label">上级权限</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="detail_parent" placeholder="上级权限" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="detail_desc" class="col-sm-2 control-label">描述</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="detail_desc" placeholder="描述" readonly="readonly">
+
+                            </textarea>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-7">
+                            <button class="btn btn-primary">更新</button>
+                        </div>
+                    </div>
+                    -->
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</body>
+</html>

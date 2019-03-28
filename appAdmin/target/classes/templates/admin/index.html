@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>layout title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    <!-- CSS Libs -->
+    <link th:href="@{/plugins/boostrapv3/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/plugins/animate/animate.min.css}" rel="stylesheet" type="text/css" />
+    <!-- CSS App -->
+    <link th:href="@{/css/admin/style.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/admin/themes/flat-blue.css}" rel="stylesheet" type="text/css">
+</head>
+<body class="flat-blue" onresize="changeFrameHeight()">
+    <div class="app-container" id="admin_app_container">
+        <div class="row content-container">
+            <div th:replace="admin/index/navigation :: navigation">navigation</div>
+            <div th:replace="admin/index/sidebar :: sidebar">sidebar</div>
+            <!-- Main Content-->
+            <div class="container-fluid">
+                <div class="side-body padding-top">
+
+                <iframe id="main_frame"  width="100%" th:src="@{/admin/bashBoard}"
+                        onload="changeFrameHeight()"
+                        frameborder="no" border="0" marginwidth="0"  marginheight="0" scrolling="no"
+                        allowtransparency="yes"></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--jquery-->
+    <script type="text/javascript"  th:src="@{/plugins/jquery/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/plugins/boostrapv3/js/bootstrap.min.js}" type="text/javascript"></script>
+    <!-- Javascript Libs -->
+    <script th:src="@{/plugins/ace/js/ace.js}" type="text/javascript"></script>
+    <script th:src="@{/plugins/ace/js/mode-html.js}" type="text/javascript"></script>
+    <script th:src="@{/plugins/ace/js/theme-github.js}" type="text/javascript"></script>
+    <script th:src="@{/plugins/art-template/template-web.js}" type="text/javascript"></script>
+    <!-- Javascript -->
+    <script th:replace="common/commonJsConstant :: common_js"></script>
+    <script th:src="@{/js/admin/app.js}" type="text/javascript"></script>
+</body>
+
+</html>

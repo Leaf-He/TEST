@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="admin/layout/iframe_main" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<body>
+    <div type="text/css" layout:fragment="customer_css">
+        <link th:href="@{/css/admin/system/permission/list.css}" rel="stylesheet" type="text/css">
+    </div>
+    <div layout:fragment="main_content" class="wrapper wrapper-content ">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="ibox ibox-body">
+                    <div class="ibox-title">
+                        <h5>选择权限</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="permissionTree" class="ztree"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div th:replace="admin/system/permission/permissionForm :: permission_form" ></div>
+                <div th:replace="admin/system/permission/permissionAdd :: permission_add" ></div>
+                <div th:replace="admin/system/permission/permissionEdit :: permissionEdit" ></div>
+            </div>
+        </div>
+
+    </div>
+    <div layout:fragment="customer_js">
+        <script th:src="@{/js/admin/common/permissionTree.js}"></script>
+        <script th:src="@{/js/admin/permission/list.js}"></script>
+    </div>
+</body>
+</html>

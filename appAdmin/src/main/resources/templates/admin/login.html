@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Flat Admin V.2 - Free Bootstrap Admin Templates</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    <!-- CSS Libs -->
+    <link th:href="@{/plugins/boostrapv3/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/plugins/animate/animate.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/plugins/bootstrap-switch/css/bootstrap-switch.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/plugins/checkbox3/checkbox3.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/plugins/jquery-dataTables/css/jquery.dataTables.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/plugins/dataTables-bootstrap/css/dataTables.bootstrap.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/plugins/select2/css/select2.min.css}" rel="stylesheet" type="text/css">
+    <!-- CSS App -->
+    <link th:href="@{/css/admin/style.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/admin/themes/flat-blue.css}" rel="stylesheet" type="text/css">
+    <style type="text/css" rel="stylesheet">
+        .control .input-group img{
+            padding: 0;
+            margin-top:0.5em;
+            margin-bottom: 0.8em;
+            height: 37px
+        }
+    </style>
+</head>
+
+<body class="flat-blue login-page">
+<div class="container">
+    <div class="login-box">
+        <div>
+            <div class="login-form row">
+                <div class="col-sm-12 text-center login-header">
+                    <i class="login-logo fa fa-connectdevelop fa-5x"></i>
+                    <h4 class="login-title">Flat Admin V2</h4>
+                </div>
+                <div class="col-sm-12">
+                    <div class="login-body">
+                        <div class="progress hidden" id="login-progress">
+                            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                Log In...
+                            </div>
+                        </div>
+                        <div class="label label-danger hidden" id="login-error" style="display: block"></div>
+                        <form id="admin_login_form">
+                            <div class="control">
+                                <input name="username" id="username" type="text" class="form-control" placeholder="账号" />
+                            </div>
+                            <div class="control">
+                                <input name="password" id="password" type="password" class="form-control" placeholder="密码" />
+                            </div>
+                            <div class="control">
+                                <div class="input-group">
+                                    <input name="verifyCode" id="verifyCode"  type="text" class="form-control" placeholder="验证码" />
+                                    <span class="input-group-btn">
+                                        <img class="btn btn-default" alt="验证码" id="admin_login_verify_code"
+                                             onclick = "javascript:refreshVerifyCode('admin_login_verify_code');" th:src="@{/verifyCode}" />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="login-button text-center">
+                                <input type="button" class="btn btn-primary" value="登录" onclick="login();">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="login-footer">
+                        <span class="text-right"><a href="#" class="color-white">Forgot password?</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--jquery-->
+<script type="text/javascript"  th:src="@{/plugins/jquery/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/plugins/boostrapv3/js/bootstrap.min.js}" type="text/javascript"></script>
+<!-- Javascript Libs -->
+<script th:src="@{/plugins/bootstrap-switch/js/bootstrap-switch.min.js}" type="text/javascript"></script>
+<script type="text/javascript"  th:src="@{/plugins/jquery-form/jquery.form.min.js}"></script>
+<script th:src="@{/plugins/jquery-matchHeight/jquery.matchHeight-min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/jquery-dataTables/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/dataTables-bootstrap/js/dataTables.bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/select2/js/select2.full.min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/ace/js/ace.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/ace/js/mode-html.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/ace/js/theme-github.js}" type="text/javascript"></script>
+<!-- Javascript -->
+<script th:replace="common/commonJsConstant :: common_js"></script>
+<script  th:src="@{/js/common/commonUtil.js}" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function(){
+        document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+            if(ev.keyCode==13) {
+                login();
+            }
+        }
+    });
+
+    function login() {
+        if(loginValidate()){
+            $('#login-progress').removeClass('hidden');
+            $('#admin_login_form').ajaxSubmit({
+                type: 'post', // 提交方式 get/post
+                url: contextPath+'admin/login', // 需要提交的 url
+                dataType:'json',
+                data:$('#admin_login_form').serialize(),
+                success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
+                    $('#login-progress').addClass('hidden');
+                    if(data.operationFlag==1){
+                        var redirectUrl = data.dataMap['redirectUrl'];
+                        if(!Validator.validateEmpty(redirectUrl)){
+                            window.location=contextPath+redirectUrl;
+                        }
+                    }else{
+                        $('#login-error').removeClass('hidden');
+                        $('#login-error').html(data.retMessage);
+                        refreshVerifyCode('admin_login_verify_code');
+                        $('#verifyCode').val('');
+                    }
+                },
+                error: function(data){
+                    $('#login-error').removeClass('hidden');
+                    $('#login-error').html('网络错误,请稍后再试')
+                    refreshVerifyCode('admin_login_verify_code');
+                    $('#verifyCode').val('');
+                }
+            });
+        }
+    }
+    
+    function loginValidate() {
+        clearError();
+        if(Validator.validateEmpty($('#username').val(),'username')){
+            $('#login-error').removeClass('hidden');
+            $('#login-error').html('用户名称不能为空')
+            return false;
+        }
+        if(Validator.validateEmpty($('#password').val(),'password')){
+            $('#login-error').removeClass('hidden');
+            $('#login-error').html('密码不能为空')
+            return false;
+        }
+        /*if(Validator.validateEmpty($('#verifyCode').val(),'verifyCode')){
+            $('#login-error').removeClass('hidden');
+            $('#login-error').html('验证码不能为空')
+            return false;
+        }*/
+
+        return true;
+    }
+    
+    function clearError() {
+        $('#login-error').addClass('hidden');
+        $('#login-error').empty();
+    }
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<body th:fragment="permission_add">
+    <script id="admin_permission_add_tmp" type="text/html">
+        <div class="panel-body">
+
+            <form class="form-horizontal" onsubmit="return false" id="add_permission_form">
+                <input type="hidden" name="level" id="add_level">
+                <div class="form-group error hidden" id="add_error">
+                    <label class="col-sm-offset-2 col-sm-9" id="add_error_label"></label>
+                </div>
+                <div class="form-group">
+                    <label for="add_name" class="col-sm-2 control-label">权限名称</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="name" id="add_name" placeholder="权限名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="add_permission" class="col-sm-2 control-label">权限</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="permission" id="add_permission" placeholder="权限">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="add_order" class="col-sm-2 control-label">显示顺序</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="add_order" name="order" placeholder="显示顺序" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="add_parent" class="col-sm-2 control-label">上级权限</label>
+                    <div class="col-sm-9">
+                        <select  class="form-control"  id="add_parent" name="parentId"> </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="add_desc" class="col-sm-2 control-label">描述</label>
+                    <div class="col-sm-9">
+                            <textarea class="form-control" id="add_desc" placeholder="描述" name="desc"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-5 col-sm-7">
+                        <button class="btn btn-primary" onclick="savePermission();">提交</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </script>
+    <script th:src="@{/js/admin/permission/add.js}"></script>
+</body>
+</html>
